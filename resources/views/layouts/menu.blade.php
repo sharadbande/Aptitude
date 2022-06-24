@@ -56,7 +56,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a href="/Profession-Level" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Profession Level</p>
                 </a>
@@ -71,10 +71,10 @@
           </li>
 
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="/home" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Widgets
+                Qustion Set
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>

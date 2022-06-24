@@ -32,8 +32,11 @@ Route::get('dashboard', [AuthController::class, 'dashboard']);
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-// Master controller
+// Master-Category
 Route::get('category', [MasterController::class, 'category'])->name('category');
 Route::post('category_post', [MasterController::class, 'categorypost'])->name('category_post');
 Route::get('GetCategoryid', [MasterController::class, 'GetCategoryid'])->name('GetCategoryid');
 Route::post('deleteCat', [MasterController::class, 'deleteCat'])->name('deleteCat');
+
+//Master-Profession Level
+Route::get('Profession-Level', [MasterController::class, 'Profession_Level'])->name('Profession-Level');

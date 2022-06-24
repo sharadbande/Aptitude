@@ -37,7 +37,7 @@
                                 <input type="text" id="category_name" name="category_name" placeholder="Category name"
                                     class="form-control">
                                 <input type="hidden" id="FromAction" name="FromAction" >
-                                <input type="hidden" readonly="" name="cat_id" id="cat_id">
+                                <input type="hidden" name="cat_id" id="cat_id">
                             </div>
 
                             @if ($errors->has('category_name'))
