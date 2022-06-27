@@ -89,7 +89,8 @@ class MasterController extends Controller
     function question_set()
     {
         $categoryInfo = DB::table('category')->where('status', '!=', 0)->get();
-        return view('master.question_sets')->with('category_info', $categoryInfo);
+        $questionInfo = DB::table('question_set')->where('status', '!=', 0)->get();
+        return view('master.question_sets',compact('categoryInfo','questionInfo'));
 
     }
 

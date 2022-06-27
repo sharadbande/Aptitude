@@ -65,7 +65,7 @@
                 <select name="cat_id" id="cat_id" class="form-control">
                     <option value="0">Select From Drop down</option>
                 @php
-                    foreach ($category_info as $row):
+                    foreach ($categoryInfo as $row):
                     @endphp
 
            <option value="{{ $row->id }}">{{ $row->category_name }}</option>
@@ -122,6 +122,55 @@
         <!-- /.card-footer-->
       </div>
       <!-- /.card -->
+
+       <div class="card">
+        <div class="card-header">
+            {{-- <h3 class="card-title">DataTable with default features</h3> --}}
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Question</th>
+                        <th>Option A</th>
+                        <th>Option B</th>
+                        <th>Option C</th>
+                        <th>Option D</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $ct=1; foreach ($questionInfo as $row):?>
+                    <tr>
+                        <td>{{ $ct }}</td>
+                        <td> {{ $row->question }} </td>
+                        <td> {{ $row->option1 }} </td>
+                        <td> {{ $row->option2 }} </td>
+                        <td> {{ $row->option3 }} </td>
+                        <td> {{ $row->option4 }} </td>
+                        <td> <button type="button" class="btn btn-primary" onclick="editproject('{{$row->id}}')">Edit</button>
+                            <button type="button" onclick="del('{{$row->id}}')"    class="btn btn-danger">Delete</button> </td>
+                    </tr>
+                    <?php $ct++; endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Question</th>
+                        <th>Option A</th>
+                        <th>Option B</th>
+                        <th>Option C</th>
+                        <th>Option D</th>
+                        <th>Action</th>
+                    </tr>
+
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
 
     </section>
     <!-- /.content -->
