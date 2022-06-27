@@ -55,23 +55,18 @@
                   <p>Category</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="/Profession-Level" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Profession Level</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Question Set</p>
-                </a>
-              </li>
+              </li> --}}
+
             </ul>
           </li>
 
           <li class="nav-item">
-            <a href="/home" class="nav-link">
+            <a href="/Question-Set" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Qustion Set
@@ -177,14 +172,14 @@
    @if(session()->has('success-message'))
     <div class="alert alert-success" id="success-alert">
         <button type="button" class="close" data-dismiss="alert">x</button>
-         <h5><p style="color: green">  {{ session()->get('success-message') }} </p></h5>
+         <h5><p style="color: green ;  text-align: right;">  {{ session()->get('success-message') }} </p></h5>
      </div>
    @endif
 
    @if(session()->has('error-message'))
     <div class="alert alert-error" id="error-alert">
         <button type="button" class="close" data-dismiss="alert">x</button>
-         <h5><p style="color: green">  {{ session()->get('error-message') }} </p></h5>
+         <h5><p style="color: red; text-align: right;">  {{ session()->get('error-message') }} </p></h5>
      </div>
    @endif
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 // use App\Models\Master;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 
 class MasterController extends Controller
@@ -78,9 +79,84 @@ class MasterController extends Controller
 
     function Profession_Level()
     {
-        $categoryInfo = DB::table('category')
-        ->where('status', '!=', 0)->get();
+        $categoryInfo = DB::table('category')->where('status', '!=', 0)->get();
     return view('master.profession_level')->with('category_info', $categoryInfo);
+    }
+
+
+
+
+    function question_set()
+    {
+        $categoryInfo = DB::table('category')->where('status', '!=', 0)->get();
+        return view('master.question_sets')->with('category_info', $categoryInfo);
+
+    }
+
+
+    function question_configurastion_step2(Request $request)
+    {
+           $cat_id =$request->cat_id;
+           $profession_level =$request->profession_level;
+
+            if($cat_id == 0)
+            {
+              return redirect("Question-Set")->with('error-message', 'ohh! Please Select Category');
+            }
+            if($profession_level ==0)
+            {
+              return redirect("Question-Set")->with('error-message', 'ohh! Please Select Profession Level');
+            }
+
+
+            if($cat_id !=0 & $profession_level !=0){
+
+                Session::put('cat_id', $cat_id);
+                Session::put('profession_level', $profession_level );
+            //    $cat_id_session=  DB::table('category')->where('id',"=", $cat_id)->first();
+
+              $question_info = DB::table('question_set')
+              ->where('cat_id', '=', $cat_id)
+              ->where('profession_id', '=', $profession_level)
+              ->get();
+
+              return view('master.question_configurastion_step2')->with('question_info',$question_info);
+
+                }
+
+
+
+            return redirect("Question-Set")->with('error-message', 'ohh! Please Select Configurastion');
+
+    }
+
+
+
+    function question_post(Request $request)
+    {
+           $request->validate([
+            'question' => 'required',
+            'option1' => 'required',
+            'option2' => 'required',
+            'option3' => 'required',
+            'option4' => 'required',
+            'answer' => 'required',
+                   ]);
+
+
+        $data = array(
+            "question" => $request->question,
+            "option1" => $request->option1,
+            "option2" => $request->option2,
+            "option3" => $request->option3,
+            "option4" => $request->option4,
+            "answer" => $request->answer,
+            "cat_id" => $request->cat_id,
+            "profession_id" => $request->profession_id,
+
+        );
+        DB::table('question_set')->insert($data);
+        echo json_encode(array("status" => "200", "message" => "Record inserted successfully."));
     }
 
 }

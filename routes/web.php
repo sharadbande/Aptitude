@@ -40,3 +40,11 @@ Route::post('deleteCat', [MasterController::class, 'deleteCat'])->name('deleteCa
 
 //Master-Profession Level
 Route::get('Profession-Level', [MasterController::class, 'Profession_Level'])->name('Profession-Level');
+
+
+
+
+Route::get('Question-Set', [MasterController::class, 'question_set'])->name('Question-Set');
+Route::post('Question-Configurastion-Step2', [MasterController::class, 'question_configurastion_step2'])->name('Question-Configurastion-step2');
+Route::post('Question_Post', [MasterController::class, 'question_post'])->name('Question_Post');
+
