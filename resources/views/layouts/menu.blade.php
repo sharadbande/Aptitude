@@ -74,11 +74,23 @@
               </p>
             </a>
           </li>
+
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+            <a href="/Generate-Quiz" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
               <p>
                 Generate Quiz
+                {{-- <span class="right badge badge-danger">New</span> --}}
+              </p>
+            </a>
+          </li>
+
+
+          {{-- <li class="nav-item">
+            <a href="/Generate-Quiz" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Generate Quiz 1
                 <i class="fas fa-angle-left right"></i>
                 <span class="badge badge-info right">6</span>
               </p>
@@ -98,7 +110,7 @@
               </li>
 
             </ul>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>

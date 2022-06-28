@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\MasterController;
 use App\Http\Middleware\CheckUserExists;
+use App\Http\Controllers\quizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::middleware(CheckUserExists::class)->namespace('\App\Http\Controllers')->group(function(){
+
 // Master-Category
 Route::get('category', [MasterController::class, 'category'])->name('category');
 Route::post('category_post', [MasterController::class, 'categorypost'])->name('category_post');
@@ -48,5 +50,7 @@ Route::get('Question-Set', [MasterController::class, 'question_set'])->name('Que
 Route::post('Question-Configurastion-Step2', [MasterController::class, 'question_configurastion_step2'])->name('Question-Configurastion-step2');
 Route::post('Question_Post', [MasterController::class, 'question_post'])->name('Question_Post');
 
-
-    });
+});
+route::get('Generate-Quiz',[quizController::class,'generating_quiz'])->name('Generate-Quiz');
+route::post('Validate-from',[quizController::class,'validate_from'])->name('Validate-from');
+route::get('Email-validate',[quizController::class,'validate_email'])->name('Email-validate');
