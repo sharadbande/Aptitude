@@ -95,7 +95,10 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('dashboard');
+               $question_count = \DB::table('question_set')->count();
+               $category_count = \DB::table('category')->count();
+
+            return view('dashboard',compact('question_count','category_count'));
         }
 
         return redirect("login")->with('error-message', 'Opps! You do not have access');

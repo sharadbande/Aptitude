@@ -82,7 +82,7 @@
                 <label for="inputSpentBudget">Profession Level</label>
                 <input type="text" class="form-control"  readonly="" name="profession_level" value="{{ $profession_level_name }}">
             </div>
-             <input type="submit" value="Question Configurastion"  data-toggle="modal" data-target="#addquestion" onclick="resetform()" class="btn btn-success float-left">
+             <input type="submit" value="Add Question's Set"  data-toggle="modal" data-target="#addquestion" onclick="resetform()" class="btn btn-success float-left">
 
 
           </div>
@@ -118,7 +118,7 @@
 
 
                             <div class="form-group">
-                                <label for="inputSpentBudget"> <span style="color: #007bff">Category:</span> {{ $cat_id_session->category_name; }} <span style="color: #007bff">Profession Level:</span>    {{ $profession_level_name }}</label>
+                                <label for="inputSpentBudget"> <span>Add Question Sets's of </span> <span style="color: #007bff"> {{ $cat_id_session->category_name; }} </span> for <span>Profession Level</span>  <span style="color: #007bff">  {{ $profession_level_name }}</span> </label>
                             </div>
                             <div class="form-group">
                                 <label for="inputSpentBudget">Question</label>
@@ -163,8 +163,14 @@
 
                         <div class="form-group">
                             <label for="inputSpentBudget">Answer</label>
-                            <input type="text" id="answer" name="answer" placeholder="Correct Answer "
-                                class="form-control">
+                            <select name="answer" id="answer" class="form-control">
+                                <option value="#" class="form-control">Select Correct Answer</option>
+                                <option value="A" class="form-control">A</option>
+                                <option value="B" class="form-control">B</option>
+                                <option value="C" class="form-control">C</option>
+                                <option value="D" class="form-control">D</option>
+                            </select>
+                            {{-- <input type="text" id="answer" name="answer" placeholder="Correct Answer "  class="form-control"> --}}
 
 
                         </div>
@@ -224,7 +230,7 @@
                         <td> {{ $row->option2 }} </td>
                         <td> {{ $row->option3 }} </td>
                         <td> {{ $row->option4 }} </td>
-                        <td> <button type="button" class="btn btn-primary" onclick="editproject('{{$row->id}}')">Edit</button>
+                        <td style="display: flex ; padding: 10px;"> <button type="button" class="btn btn-primary" onclick="editproject('{{$row->id}}')">Edit</button>
                             <button type="button" onclick="del('{{$row->id}}')"    class="btn btn-danger">Delete</button> </td>
                     </tr>
                     <?php $ct++; endforeach; ?>

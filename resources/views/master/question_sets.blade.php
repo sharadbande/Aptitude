@@ -102,8 +102,8 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <a href="#" class="btn btn-secondary">Cancel</a>
-        <input type="submit" value="Question Configurastion" class="btn btn-success float-right">
+        {{-- <a href="#" class="btn btn-secondary">Cancel</a> --}}
+        <input type="submit" value="Question Configurastion" class="btn btn-success float-left">
       </div>
     </div>
 </form>
@@ -133,6 +133,7 @@
                 <thead>
                     <tr>
                         <th>Sr. No</th>
+                        <th>Category</th>
                         <th>Question</th>
                         <th>Option A</th>
                         <th>Option B</th>
@@ -142,15 +143,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $ct=1; foreach ($questionInfo as $row):?>
+                    <?php $ct=1; foreach ($categoryInfo_join as $row):?>
                     <tr>
                         <td>{{ $ct }}</td>
+                        <td>{{ $row->category_name  }}</td>
                         <td> {{ $row->question }} </td>
                         <td> {{ $row->option1 }} </td>
                         <td> {{ $row->option2 }} </td>
                         <td> {{ $row->option3 }} </td>
                         <td> {{ $row->option4 }} </td>
-                        <td> <button type="button" class="btn btn-primary" onclick="editproject('{{$row->id}}')">Edit</button>
+                        <td style="display: flex ; padding: 10px;"> <button type="button" class="btn btn-primary" onclick="editproject('{{$row->id}}')">Edit</button>
                             <button type="button" onclick="del('{{$row->id}}')"    class="btn btn-danger">Delete</button> </td>
                     </tr>
                     <?php $ct++; endforeach; ?>
@@ -158,6 +160,7 @@
                 <tfoot>
                     <tr>
                         <th>Sr. No</th>
+                        <th>Category</th>
                         <th>Question</th>
                         <th>Option A</th>
                         <th>Option B</th>

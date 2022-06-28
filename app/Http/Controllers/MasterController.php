@@ -29,7 +29,12 @@ class MasterController extends Controller
         // $request->validate([
         //     'category_name' => 'required',
         //            ]);
+//   $category_name= $request ->category_name;
 
+//   if($category_name == ""){
+//     // return redirect("category")->with('error-message', 'ohh! Please Select Category Level');
+//     echo json_encode(array("status" => "302", "message" => "ohh! Please Select Category Level"));
+// }
         switch ($request->FromAction) {
             case 'Add':
                 $data = array(
@@ -90,7 +95,13 @@ class MasterController extends Controller
     {
         $categoryInfo = DB::table('category')->where('status', '!=', 0)->get();
         $questionInfo = DB::table('question_set')->where('status', '!=', 0)->get();
-        return view('master.question_sets',compact('categoryInfo','questionInfo'));
+
+        $categoryInfo_join = DB::table('question_set')
+        ->select('question_set.*', 'category.category_name')
+        ->join('category', 'question_set.cat_id', '=', 'category.id')
+        ->get();
+
+        return view('master.question_sets',compact('categoryInfo','questionInfo','categoryInfo_join'));
 
     }
 
