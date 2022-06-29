@@ -3,6 +3,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -20,6 +21,19 @@
         </div>
       </div><!-- /.container-fluid -->
       <h1 class="text-center" style="padding: 10px;">Aptitude</h1>
+      @if(session()->has('success-message'))
+    <div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+         <h5><p style="color: green ;  text-align: right;">  {{ session()->get('success-message') }} </p></h5>
+     </div>
+   @endif
+
+   @if(session()->has('error-message'))
+    <div class="alert alert-error" id="error-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+         <h5><p style="color: red; text-align: right;">  {{ session()->get('error-message') }} </p></h5>
+     </div>
+   @endif
     </section>
 
     <!-- Main content -->
@@ -111,7 +125,7 @@
 <br>
             <div class="form-group">
               <input type="submit" class="btn btn-primary" value="Apply To Aptitude">
-             <p> <a href="/Email-validate">If you have already Fill form Click here</a></p>
+             {{-- <p> <a href="/Email-validate">If you have already Fill form Click here</a></p> --}}
             </div>
         </form>
           </div>
