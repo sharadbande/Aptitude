@@ -58,12 +58,42 @@ class quizController extends Controller
         return redirect("Generate-Quiz")->with('error-message', 'Something goes to Wrong...!');
     }
 
+
+
+
+
+// ****************************************************************************
+
+// START APTITUDE
+
+// ****************************************************************************
+
     function startaptitude()
     {
-        // Direct user not allowed
         if (empty(Session::get('candidate_id'))) {
             return redirect("Generate-Quiz")->with('error-message', 'Please fill Form First');
         }
+
+        // Current time -> Sep 22, 2022 15:37:25
+        // $CurrentTime1 = date('M d,Y, h:i:s'); //for Current time -> add +20 min for end exam
+
+        $cann_ID = Session::get('candidate_id');
+
+        $candidate_added_on_time = DB::table('candidate_aptitude')
+            ->where('id', '=', $cann_ID)
+            ->get();
+
+        // echo "<pre>";
+        // print_r($candidate_added_on_time);
+        // die;
+        $candidate_added_on_time[0]->added_on;
+
+        $CurrentTime =  $candidate_added_on_time[0]->added_on; //Exam end time based on DB->added_on time
+
+
+        // Addiing +20 min from Aptitude Start time
+        $settingEndTime = date('M d,Y H:i:s', strtotime($CurrentTime . ' +8 minutes'));
+
 
         // session array to Page
         $candidate_session = array(
@@ -85,9 +115,14 @@ class quizController extends Controller
             ->where('profession_id', '=', $candidate_level)
             ->get(['id', 'question', 'option1', 'option2', 'option3', 'option4', 'cat_id', 'profession_id', 'status', 'category_name'])->toArray();
 
-        return view('quiz.Start-Aptitude', compact('candidate_session', 'question_info'));
+        return view('quiz.Start-Aptitude', compact('candidate_session', 'question_info', 'settingEndTime'));
     }
 
+// ****************************************************************************
+
+// START APTITUDE
+
+// ****************************************************************************
 
     function storeaptitude(Request $Request)
     {
@@ -95,12 +130,6 @@ class quizController extends Controller
         $newdata = array();
         $ques = array();
         $newdata = $Request->all();
-
-        // If user form submited directly
-        // if (count($newdata) <= 4) {
-        //     return json_encode(array("status" => "302", "message" => "Submit .", "url" => "/Generate-Quiz"));
-        // }
-
 
         foreach ($newdata as $key => $items) {
             $que = explode('-', $key);
@@ -114,6 +143,15 @@ class quizController extends Controller
         $candidate_email = $newdata['candidate_email'];
         $candidate_id = $newdata['candidate_id'];
         $question_answer = json_encode($ques);
+// echo $question_answer;
+
+
+// if(empty($question_answer)){
+//     echo "Null aheeee";
+//     return "Null ahe";
+//     die;
+// }
+// die("Out of");
         $data = array(
             'candidate_name' => $candidate_name,
             'candidate_email' => $candidate_email,
@@ -121,13 +159,25 @@ class quizController extends Controller
             'question_answer' => $question_answer,
         );
         DB::table('aptitude_result')->insert($data);
+        $Request->session()->forget('candidate_name');
+        $Request->session()->forget('candidate_email');
+        $Request->session()->forget('candidate_mobile');
+        $Request->session()->forget('candidate_category');
+        $Request->session()->forget('candidate_level');
+        $Request->session()->forget('candidate_id');
         echo json_encode(array("status" => "200", "message" => "Record inserted successfully.", "url" => "/Generate-Quiz"));
     }
 
 
 
 
-
+    function endaptitude(Request $Request)
+    {
+        echo "<pre>";
+        print_r($Request);
+        echo "sampli exam ja ghari";
+        die;
+    }
 
 
 

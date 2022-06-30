@@ -1,14 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aptitude | Walstar</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ </head>
+<body>
+
+
+@php
+
+@endphp
 
 
 
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.js"></script> --}}
-
-
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="container-fluid">
 <style>
     .form-check-label{
@@ -35,7 +45,7 @@
                     <div class="text-center mt-3">
                         {{-- <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span> --}}
                         <h5 class="mt-2 mb-0"> {{ $candidate_session['candidate_name'] }}</h5>
-                        <span> {{ $question_info[0]->category_name }} </span>
+                        <span> Your Aptitude Test Based On : <strong>{{ $question_info[0]->category_name }}</strong> </span>
 
                         <div class="px-4 mt-1">
                             <p class="fonts">  </p>
@@ -44,7 +54,7 @@
 
 
                         <div class="buttons">
-
+                            <div class="d-flex justify-content-center border border-success"><h3>Remaning Time : <span  id="counter-sb" > </span>  </h3> </div>
                             {{-- <button class="btn btn-outline-primary px-4">Message</button>
                             <button class="btn btn-primary px-4 ms-3">Contact</button> --}}
                         </div>
@@ -57,6 +67,9 @@
             </div>
 
         </div>
+
+
+
 
     </div><br>
     <form action="#" method="post"  id="addaptitude">
@@ -89,26 +102,26 @@
                 {{-- Option 1 --}}
                 <div class="form-check">
 
-                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r1" value="A">  a
+                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r1" value="A">
                 <label class="form-check-label" for="q1_r1"> {{ $key->option1 }}</label>
 
                 </div>
 
                 {{-- Option 2 --}}
                 <div class="form-check">
-                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r2" value="B">b
+                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r2" value="B">
                 <label class="form-check-label" for="q1_r2">{{ $key->option2 }}</label>
                 </div>
 
                 {{-- Option 3 --}}
                 <div class="form-check">
-                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r3" value="C">c
+                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r3" value="C">
                 <label class="form-check-label" for="q1_r3">{{ $key->option3 }}</label>
                 </div>
 
                 {{-- Option 4 --}}
                 <div class="form-check">
-                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r4" value="D">d
+                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r4" value="D">
                 <label class="form-check-label" for="q1_r4">{{ $key->option4 }}</label>
                 </div>
 
@@ -127,18 +140,19 @@
 
        {{-- <h3>Result</h3> --}}
 
-        <div class="card">
-        <div class="card-body">
-            {{-- <p id="result">No result.</p> --}}
 
-            <div class="progress mb-2">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            {{-- <button type="submit" class="btn btn-success center">submit</button> --}}
+            <div class="container">
+                <div class="row">
+                  <div class="col text-center">
+                    <button type="submit" class="btn btn-info center btn-lg" >Finish Aptitude</button>
+                  </div>
+                </div>
+              </div>
 
-            <button type="submit" class="btn btn-success center">submit</button>
-        </div>
-        </div>
+
     </form>
+
 
     <script>
         $(document).ready(function(){
@@ -147,7 +161,8 @@
 
         evt.preventDefault();
         var data=$('#addaptitude').serialize();
-        console.log(data);
+        // console.log(data);
+        if (confirm('Are you sure you want to submit your test')) {
         $.ajax({
             type: "POST",
             headers: {
@@ -159,28 +174,84 @@
             success: function(response) {
                 if(response.status=="200")
                {
+                // document.location.reload()
+                window.location=response.url;
+                // window.history.forward()
+               }
+
+            }
+
+        });
+    }
+    });
+
+    });
+      </script>
+
+      <script>
+        // Set the date we're counting down to
+        var settingEndTimeID = @json($settingEndTime);
+        // var countDownDate1 = new Date("Sep 22, 2022 15:37:25").getTime();
+        var countDownDate = new Date(settingEndTimeID).getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+          // Get today's date and time
+          var now = new Date().getTime();
+
+          // Find the distance between now and the count down date
+          var distance = countDownDate - now;
+// console.log(distance);
+
+          // Time calculations for days, hours, minutes and seconds
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          // Output the result in an element with id="demo"
+        //   document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+        //   + minutes + "m " + seconds + "s ";
+        document.getElementById("counter-sb").innerHTML = hours + "h "
+          + minutes + "m " + seconds + "s ";
+
+          // If the count down is over, write some text
+          if (distance < 0) {
+            clearInterval(x);
+            alert("Your Time Has Ended");
+            document.getElementById("counter-sb").innerHTML = "EXPIRED";
+            alert("Your Exam Will Auto Submit...!");
+
+            var data=$('#addaptitude').serialize();
+            // console.log(data)
+            $.ajax({
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: 'Aptitude-Store',
+            data: data,
+            dataType : 'json',
+            success: function(response) {
+                if(response.status=="200")
+               {
+                document.getElementById("addaptitude").reset();
                 window.location=response.url;
                }
 
             }
 
         });
-    });
+          }
+        }, 1000);
+        </script>
 
-    });
-      </script>
 
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </div>
+</body>
+</html>
 
-{{-- @php
- echo "<pre>";
-    print_r($candidate_session);
-     echo "now Question Set<br>";
-     echo "<pre>";
-    dd($question_info);
-
-@endphp --}}

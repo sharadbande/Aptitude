@@ -69,7 +69,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
+    // date_default_timezone_set(env('APP_TIMEZONE', 'Asia/Kolkata')),
 
     /*
     |--------------------------------------------------------------------------

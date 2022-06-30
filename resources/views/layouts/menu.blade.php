@@ -76,7 +76,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="/Generate-Quiz" class="nav-link">
+            <a href="/Generate-Quiz" target="_blank" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
               <p>
                 Generate Quiz

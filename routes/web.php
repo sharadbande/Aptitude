@@ -56,3 +56,4 @@ route::post('Validate-from',[quizController::class,'validate_from'])->name('Vali
 route::get('Email-validate',[quizController::class,'validate_email'])->name('Email-validate');
 route::get('Aptitude-Start',[quizController::class,'startaptitude'])->name('Aptitude-Start');
 route::POST('Aptitude-Store',[quizController::class,'storeaptitude'])->name('Aptitude-Store');
+// route::POST('Aptitude-End',[quizController::class,'endaptitude'])->name('Aptitude-End');
