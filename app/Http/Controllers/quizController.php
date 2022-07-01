@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Session;
-
+use Artisan;
 
 
 
@@ -74,9 +74,6 @@ class quizController extends Controller
             return redirect("Generate-Quiz")->with('error-message', 'Please fill Form First');
         }
 
-        // Current time -> Sep 22, 2022 15:37:25
-        // $CurrentTime1 = date('M d,Y, h:i:s'); //for Current time -> add +20 min for end exam
-
         $cann_ID = Session::get('candidate_id');
 
         $candidate_added_on_time = DB::table('candidate_aptitude')
@@ -87,12 +84,9 @@ class quizController extends Controller
         // print_r($candidate_added_on_time);
         // die;
         $candidate_added_on_time[0]->added_on;
-
         $CurrentTime =  $candidate_added_on_time[0]->added_on; //Exam end time based on DB->added_on time
-
-
         // Addiing +20 min from Aptitude Start time
-        $settingEndTime = date('M d,Y H:i:s', strtotime($CurrentTime . ' +8 minutes'));
+        $settingEndTime = date('M d,Y H:i:s', strtotime($CurrentTime . ' +3 minutes'));
 
 
         // session array to Page
@@ -126,7 +120,7 @@ class quizController extends Controller
 
     function storeaptitude(Request $Request)
     {
-        // echo "<pre>In controller";
+
         $newdata = array();
         $ques = array();
         $newdata = $Request->all();
@@ -143,15 +137,19 @@ class quizController extends Controller
         $candidate_email = $newdata['candidate_email'];
         $candidate_id = $newdata['candidate_id'];
         $question_answer = json_encode($ques);
-// echo $question_answer;
 
 
-// if(empty($question_answer)){
-//     echo "Null aheeee";
-//     return "Null ahe";
-//     die;
-// }
-// die("Out of");
+// if candidate resubmit his exam
+        // $candidate_id_info  = DB::table('aptitude_result')
+        //        ->where('candidate_id', '=', $candidate_id)->first();
+        // if ($candidate_id_info != null) {
+        //     // return redirect("Generate-Quiz")->with('error-message', 'Something goes to Wrong...!');
+        //     return   json_encode(array("status" => "302", "message" => "You have already Submited youe exam...!", "url" => "/Generate-Quiz"));
+
+        // }
+// if candidate resubmit his exam
+
+
         $data = array(
             'candidate_name' => $candidate_name,
             'candidate_email' => $candidate_email,
@@ -165,13 +163,12 @@ class quizController extends Controller
         $Request->session()->forget('candidate_category');
         $Request->session()->forget('candidate_level');
         $Request->session()->forget('candidate_id');
-        echo json_encode(array("status" => "200", "message" => "Record inserted successfully.", "url" => "/Generate-Quiz"));
+
+        echo json_encode(array("status" => "200", "message" => "Record inserted successfully.", "url" => "Generate-Quiz"));
+
     }
 
-
-
-
-    function endaptitude(Request $Request)
+  function endaptitude(Request $Request)
     {
         echo "<pre>";
         print_r($Request);

@@ -53,7 +53,11 @@ Route::post('Question_Post', [MasterController::class, 'question_post'])->name('
 });
 route::get('Generate-Quiz',[quizController::class,'generating_quiz'])->name('Generate-Quiz');
 route::post('Validate-from',[quizController::class,'validate_from'])->name('Validate-from');
+Route::middleware(candidateSession::class)->namespace('\App\Http\Controllers')->group(function(){
+
+
 route::get('Email-validate',[quizController::class,'validate_email'])->name('Email-validate');
 route::get('Aptitude-Start',[quizController::class,'startaptitude'])->name('Aptitude-Start');
 route::POST('Aptitude-Store',[quizController::class,'storeaptitude'])->name('Aptitude-Store');
 // route::POST('Aptitude-End',[quizController::class,'endaptitude'])->name('Aptitude-End');
+});

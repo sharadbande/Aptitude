@@ -45,6 +45,7 @@
                     <div class="text-center mt-3">
                         {{-- <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span> --}}
                         <h5 class="mt-2 mb-0"> {{ $candidate_session['candidate_name'] }}</h5>
+                        <p>{{ $candidate_session['candidate_email'] }}</p>
                         <span> Your Aptitude Test Based On : <strong>{{ $question_info[0]->category_name }}</strong> </span>
 
                         <div class="px-4 mt-1">
@@ -152,12 +153,84 @@
 
 
     </form>
+<style>
+    body {
+  /* background: #ececec; */
+}
+.lds-dual-ring.hidden {
+display: none;
+}
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 5% auto;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,.8);
+    z-index: 999;
+    opacity: 1;
+    transition: all 1.50s;
+}
+</style>
+    <div id="loader" class="lds-dual-ring hidden overlay"></div>
+
+
+{{-- <script>
+    $(document).ready(function(){
+
+        if(window.location.href.substr(-2) !== "?r")
+        {
+           window.location = window.location.href + "?r";
+         }
+        var session_cat_id =  {{  Session::get('candidate_id');}}
+    // alert(session_cat_id)
+           if (session_cat_id == null){
+    alert("as nahi exam deta yet dadyaaa, ekda submit kel ki..!")
+}
+    });
+</script> --}}
+
+<script>
+    window.addEventListener( "pageshow", function ( event ) {
+  var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+  if ( historyTraversal ) {
+    // Handle page restore.
+    //alert('refresh');
+    window.location.reload();
+  }
+});
+</script>
 
     <script>
         $(document).ready(function(){
 
-    $('#addaptitude').on('submit', function (evt) {
+    $('#addaptitude').on('submit',function (evt) {
 
         evt.preventDefault();
         var data=$('#addaptitude').serialize();
@@ -171,15 +244,21 @@
             url: 'Aptitude-Store',
             data: data,
             dataType : 'json',
+            beforeSend: function() {
+        $('#loader').removeClass('hidden')
+    },
             success: function(response) {
                 if(response.status=="200")
                {
-                // document.location.reload()
+                // alert("Success madhe yetey")
                 window.location=response.url;
-                // window.history.forward()
+
                }
 
-            }
+            },
+            complete: function(){
+        $('#loader').addClass('hidden')
+    },
 
         });
     }
@@ -197,7 +276,7 @@
         // Update the count down every 1 second
         var x = setInterval(function() {
 
-          // Get today's date and time
+              // Get today's date and time
           var now = new Date().getTime();
 
           // Find the distance between now and the count down date
