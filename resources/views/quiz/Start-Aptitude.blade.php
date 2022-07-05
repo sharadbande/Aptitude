@@ -12,19 +12,61 @@
  </head>
 <body>
 
+ <style>
 
-@php
-
-@endphp
-
-
-
+ </style>
 <div class="container-fluid">
 <style>
     .form-check-label{
         pointer-events: none;
     }
 </style>
+<style>
+
+     /* Hide all steps by default: */
+    .tab {
+      display: none;
+    }
+
+    button {
+      background-color: #04AA6D;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 17px;
+      font-family: Raleway;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    #prevBtn {
+      background-color: #bbbbbb;
+    }
+
+    /* Make circles that indicate the steps of the form: */
+    .step {
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbbbbb;
+      border: none;
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.5;
+    }
+
+    .step.active {
+      opacity: 1;
+    }
+
+    /* Mark the steps that are finished and valid: */
+    .step.finish {
+      background-color: #04AA6D;
+    }
+    </style>
     {{-- <div class="jumbotron">
       <h3>The big knowledge test!</h3>
       <p>How good is your general knowledge?</p>
@@ -70,8 +112,6 @@
         </div>
 
 
-
-
     </div><br>
     <form action="#" method="post"  id="addaptitude">
         @csrf
@@ -83,8 +123,8 @@
     $ct=1;
     foreach($question_info as $key):
 @endphp
-
-<div class="card border-info mb-4 ">
+<div class="tab">
+<div class="card border-info mb-4">
 
             <div class="d-flex justify-content-between align-items-center card-header bg-info text-white" id="h1">
             <span>Question {{$ct}}</span>
@@ -97,40 +137,42 @@
 
 
             <div id="q1{{ $key->id }}" class="collapse show" aria-labelledby="h1">
-            <div class="card-body">
-                <p> {{ $key->question }}</p>
+                <div class="card-body">
+                    <p> {{ $key->question }}</p>
 
-                {{-- Option 1 --}}
-                <div class="form-check">
+                    {{-- Option 1 --}}
+                    <div class="form-check">
 
-                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r1" value="A">
-                <label class="form-check-label" for="q1_r1"> {{ $key->option1 }}</label>
+                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r1" value="A">
+                    <label class="form-check-label" for="q1_r1"> {{ $key->option1 }}</label>
 
-                </div>
+                    </div>
 
-                {{-- Option 2 --}}
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r2" value="B">
-                <label class="form-check-label" for="q1_r2">{{ $key->option2 }}</label>
-                </div>
+                    {{-- Option 2 --}}
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r2" value="B">
+                    <label class="form-check-label" for="q1_r2">{{ $key->option2 }}</label>
+                    </div>
 
-                {{-- Option 3 --}}
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r3" value="C">
-                <label class="form-check-label" for="q1_r3">{{ $key->option3 }}</label>
-                </div>
+                    {{-- Option 3 --}}
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r3" value="C">
+                    <label class="form-check-label" for="q1_r3">{{ $key->option3 }}</label>
+                    </div>
 
-                {{-- Option 4 --}}
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r4" value="D">
-                <label class="form-check-label" for="q1_r4">{{ $key->option4 }}</label>
+                    {{-- Option 4 --}}
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r4" value="D">
+                    <label class="form-check-label" for="q1_r4">{{ $key->option4 }}</label>
+                    </div>
+
                 </div>
 
             </div>
 
-            </div>
         </div>
 
+    </div>
 
 
         @php
@@ -138,12 +180,16 @@
         endforeach;
         @endphp
 
-
        {{-- <h3>Result</h3> --}}
 
-
+       <div style="overflow:auto;">
+        <div style="float:right;">
+          <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+          <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        </div>
+      </div>
             {{-- <button type="submit" class="btn btn-success center">submit</button> --}}
-            <div class="container">
+            <div class="container" id="finalbutton">
                 <div class="row">
                   <div class="col text-center">
                     <button type="submit" class="btn btn-info center btn-lg" >Finish Aptitude</button>
@@ -153,69 +199,20 @@
 
 
     </form>
-<style>
-    body {
-  /* background: #ececec; */
-}
-.lds-dual-ring.hidden {
-display: none;
-}
-.lds-dual-ring {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-}
-.lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 64px;
-  height: 64px;
-  margin: 5% auto;
-  border-radius: 50%;
-  border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+    <div style="text-align:center;margin-top:40px;">
+@php
+    foreach($question_info as $key2):
+    @endphp
+    <span class="step"></span>
+
+ @php
+endforeach;
+@endphp
+</div>
 
 
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0,0,0,.8);
-    z-index: 999;
-    opacity: 1;
-    transition: all 1.50s;
-}
-</style>
-    <div id="loader" class="lds-dual-ring hidden overlay"></div>
-
-
-{{-- <script>
-    $(document).ready(function(){
-
-        if(window.location.href.substr(-2) !== "?r")
-        {
-           window.location = window.location.href + "?r";
-         }
-        var session_cat_id =  {{  Session::get('candidate_id');}}
-    // alert(session_cat_id)
-           if (session_cat_id == null){
-    alert("as nahi exam deta yet dadyaaa, ekda submit kel ki..!")
-}
-    });
-</script> --}}
-
+{{-- *******************************************IMP **************************************************************--}}
+<div id="loader" class="lds-dual-ring hidden overlay"></div>
 <script>
     window.addEventListener( "pageshow", function ( event ) {
   var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
@@ -226,11 +223,92 @@ display: none;
   }
 });
 </script>
+{{-- *******************************************IMP **************************************************************--}}
 
+
+
+<script>
+
+    var currentTab = 0; // Current tab is set to be the first tab (0)
+    showTab(currentTab); // Display the current tab
+
+    function showTab(n) {
+      // This function will display the specified tab of the form...
+      var x = document.getElementsByClassName("tab");
+      x[n].style.display = "block";
+      //... and fix the Previous/Next buttons:
+      if (n == 0) {
+        document.getElementById("prevBtn").style.display = "none";
+      } else {
+        document.getElementById("prevBtn").style.display = "inline";
+      }
+      if (n == (x.length - 1)) {
+
+        // document.getElementById("nextBtn").innerHTML = "Submit";
+        document.getElementById("nextBtn").style.display = "none";
+        document.getElementById("prevBtn").style.display = "none";
+      } else {
+        document.getElementById("nextBtn").innerHTML = "Next";
+      }
+      //... and run a function that will display the correct step indicator:
+      fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+      // This function will figure out which tab to display
+      var x = document.getElementsByClassName("tab");
+      // Exit the function if any field in the current tab is invalid:
+      if (n == 1 && !validateForm()) return false;
+      // Hide the current tab:
+      x[currentTab].style.display = "none";
+      // Increase or decrease the current tab by 1:
+      currentTab = currentTab + n;
+      // if you have reached the end of the form...
+      if (currentTab >= x.length) {
+        // ... the form gets submitted:
+        document.getElementById("regForm").submit();
+        return false;
+      }
+      // Otherwise, display the correct tab:
+      showTab(currentTab);
+    }
+
+    function validateForm() {
+      // This function deals with validation of the form fields
+      var x, y, i, valid = true;
+      x = document.getElementsByClassName("tab");
+      y = x[currentTab].getElementsByTagName("input");
+      // A loop that checks every input field in the current tab:
+      for (i = 0; i < y.length; i++) {
+        // If a field is empty...
+        if (y[i].value == "") {
+          // add an "invalid" class to the field:
+          y[i].className += " invalid";
+          // and set the current valid status to false
+          valid = false;
+        }
+      }
+      // If the valid status is true, mark the step as finished and valid:
+      if (valid) {
+        document.getElementsByClassName("step")[currentTab].className += " finish";
+      }
+      return valid; // return the valid status
+    }
+
+    function fixStepIndicator(n) {
+      // This function removes the "active" class of all steps...
+      var i, x = document.getElementsByClassName("step");
+      for (i = 0; i < x.length; i++) {
+        x[i].className = x[i].className.replace(" active", "");
+      }
+      //... and adds the "active" class on the current step:
+      x[n].className += " active";
+    }
+    </script>
     <script>
         $(document).ready(function(){
 
-    $('#addaptitude').on('submit',function (evt) {
+    $('#addaptitude').on('submit',function (evt){
 
         evt.preventDefault();
         var data=$('#addaptitude').serialize();

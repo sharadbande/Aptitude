@@ -39,9 +39,9 @@
             </button>
           </div>
         </div> --}}
-        <div class="card-body">
 
 
+ <div class="card-body">
 
  <!-- Main content -->
  <section class="content">
@@ -109,17 +109,8 @@
 </form>
   </section>
 
+ </div>
 
-
-
-
-
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-
-        </div>
-        <!-- /.card-footer-->
       </div>
       <!-- /.card -->
 

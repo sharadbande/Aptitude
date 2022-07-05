@@ -62,11 +62,9 @@ class quizController extends Controller
 
 
 
-// ****************************************************************************
-
+//****************************************************************************
 // START APTITUDE
-
-// ****************************************************************************
+//****************************************************************************
 
     function startaptitude()
     {
@@ -86,7 +84,7 @@ class quizController extends Controller
         $candidate_added_on_time[0]->added_on;
         $CurrentTime =  $candidate_added_on_time[0]->added_on; //Exam end time based on DB->added_on time
         // Addiing +20 min from Aptitude Start time
-        $settingEndTime = date('M d,Y H:i:s', strtotime($CurrentTime . ' +3 minutes'));
+        $settingEndTime = date('M d,Y H:i:s', strtotime($CurrentTime . ' +10 minutes'));
 
 
         // session array to Page
@@ -102,21 +100,24 @@ class quizController extends Controller
         $candidate_category = Session::get('candidate_category');
         $candidate_level = Session::get('candidate_level');
 
+
+        // $categoryInfo = DB::table('category')->inRandomOrder()->limit(5)->where('status', '!=', 0)->get();
+
         $question_info = DB::table('question_set')
             ->select('question_set.*', 'category.category_name')
             ->join('category', 'question_set.cat_id', '=', 'category.id')
             ->where('cat_id', '=', $candidate_category)
             ->where('profession_id', '=', $candidate_level)
+            ->inRandomOrder()
+            ->limit(5)
             ->get(['id', 'question', 'option1', 'option2', 'option3', 'option4', 'cat_id', 'profession_id', 'status', 'category_name'])->toArray();
 
         return view('quiz.Start-Aptitude', compact('candidate_session', 'question_info', 'settingEndTime'));
     }
 
-// ****************************************************************************
-
+//****************************************************************************
 // START APTITUDE
-
-// ****************************************************************************
+//****************************************************************************
 
     function storeaptitude(Request $Request)
     {
@@ -157,6 +158,9 @@ class quizController extends Controller
             'question_answer' => $question_answer,
         );
         DB::table('aptitude_result')->insert($data);
+        DB::table('candidate_aptitude')->where('candidate_email', $candidate_email)->update(array('status' => 2));
+
+
         $Request->session()->forget('candidate_name');
         $Request->session()->forget('candidate_email');
         $Request->session()->forget('candidate_mobile');
