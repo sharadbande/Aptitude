@@ -84,7 +84,7 @@ class quizController extends Controller
         $candidate_added_on_time[0]->added_on;
         $CurrentTime =  $candidate_added_on_time[0]->added_on; //Exam end time based on DB->added_on time
         // Addiing +20 min from Aptitude Start time
-        $settingEndTime = date('M d,Y H:i:s', strtotime($CurrentTime . ' +10 minutes'));
+        $settingEndTime = date('M d,Y H:i:s', strtotime($CurrentTime . ' +100 minutes'));
 
 
         // session array to Page

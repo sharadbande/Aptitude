@@ -7,66 +7,69 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
  </head>
 <body>
 
- <style>
-
- </style>
 <div class="container-fluid">
 <style>
     .form-check-label{
         pointer-events: none;
     }
 </style>
+
 <style>
+   /* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
 
-     /* Hide all steps by default: */
-    .tab {
-      display: none;
-    }
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
 
-    button {
-      background-color: #04AA6D;
-      color: #ffffff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 17px;
-      font-family: Raleway;
-      cursor: pointer;
-    }
+button {
+  background-color: #04AA6D;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-family: Raleway;
+  cursor: pointer;
+}
 
-    button:hover {
-      opacity: 0.8;
-    }
+button:hover {
+  opacity: 0.8;
+}
 
-    #prevBtn {
-      background-color: #bbbbbb;
-    }
+#prevBtn {
+  background-color: #bbbbbb;
+}
 
-    /* Make circles that indicate the steps of the form: */
-    .step {
-      height: 15px;
-      width: 15px;
-      margin: 0 2px;
-      background-color: #bbbbbb;
-      border: none;
-      border-radius: 50%;
-      display: inline-block;
-      opacity: 0.5;
-    }
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
 
-    .step.active {
-      opacity: 1;
-    }
+.step.active {
+  opacity: 1;
+}
 
-    /* Mark the steps that are finished and valid: */
-    .step.finish {
-      background-color: #04AA6D;
-    }
-    </style>
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #04AA6D;
+}
+</style>
     {{-- <div class="jumbotron">
       <h3>The big knowledge test!</h3>
       <p>How good is your general knowledge?</p>
@@ -112,22 +115,30 @@
         </div>
 
 
-    </div><br>
+    </div>
+
+    <br>
     <form action="#" method="post"  id="addaptitude">
         @csrf
         <input type="hidden" name="candidate_name" id="candidate_name" value="{{ $candidate_session['candidate_name'] }}">
         <input type="hidden" name="candidate_email" id="candidate_email" value="{{ $candidate_session['candidate_email'] }}">
         <input type="hidden" name="candidate_id" id="candidate_id"  value="{{ $candidate_session['candidate_id'] }}">
 
+{{-- *******************************************IMP : Show validation Error**************************************************************--}}
+
+        <h3><p id="errorptag" style="display:none" ></p></h3>
+{{-- *******************************************IMP : Show validation Error **************************************************************--}}
+
 @php
     $ct=1;
+    $total_qustion_count= count($question_info);
     foreach($question_info as $key):
 @endphp
 <div class="tab">
 <div class="card border-info mb-4">
 
             <div class="d-flex justify-content-between align-items-center card-header bg-info text-white" id="h1">
-            <span>Question {{$ct}}</span>
+            <span>Question {{$ct }}/{{ $total_qustion_count}}     </span>
             <button type="button" data-toggle="collapse" data-target="#q1" aria-expanded="false" aria-controls="q1" class="btn btn-outline-light">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
@@ -143,26 +154,26 @@
                     {{-- Option 1 --}}
                     <div class="form-check">
 
-                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r1" value="A">
+                    <input class="form-check-input" type="radio"   name="qustion-{{ $key->id }}" id="qustion-{{ $key->id }}" value="A" required/>
                     <label class="form-check-label" for="q1_r1"> {{ $key->option1 }}</label>
 
                     </div>
 
                     {{-- Option 2 --}}
                     <div class="form-check">
-                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r2" value="B">
+                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="qustion-{{ $key->id }}" value="B" required/>
                     <label class="form-check-label" for="q1_r2">{{ $key->option2 }}</label>
                     </div>
 
                     {{-- Option 3 --}}
                     <div class="form-check">
-                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r3" value="C">
+                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="qustion-{{ $key->id }}" value="C" required/>
                     <label class="form-check-label" for="q1_r3">{{ $key->option3 }}</label>
                     </div>
 
                     {{-- Option 4 --}}
                     <div class="form-check">
-                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="q1_r4" value="D">
+                    <input class="form-check-input" type="radio" name="qustion-{{ $key->id }}" id="qustion-{{ $key->id }}" value="D" required/>
                     <label class="form-check-label" for="q1_r4">{{ $key->option4 }}</label>
                     </div>
 
@@ -199,6 +210,7 @@
 
 
     </form>
+
     <div style="text-align:center;margin-top:40px;">
 @php
     foreach($question_info as $key2):
@@ -210,8 +222,7 @@ endforeach;
 @endphp
 </div>
 
-
-{{-- *******************************************IMP **************************************************************--}}
+{{-- *******************************************IMP : after exam submited back not allowed**************************************************************--}}
 <div id="loader" class="lds-dual-ring hidden overlay"></div>
 <script>
     window.addEventListener( "pageshow", function ( event ) {
@@ -223,18 +234,21 @@ endforeach;
   }
 });
 </script>
-{{-- *******************************************IMP **************************************************************--}}
+{{-- *******************************************IMP : after exam submited back not allowed**************************************************************--}}
 
 
+{{-- *******************************************IMP: multistep logic here **************************************************************--}}
 
-<script>
-
+ <script>
     var currentTab = 0; // Current tab is set to be the first tab (0)
     showTab(currentTab); // Display the current tab
 
     function showTab(n) {
+
       // This function will display the specified tab of the form...
       var x = document.getElementsByClassName("tab");
+        // console.log(x)
+
       x[n].style.display = "block";
       //... and fix the Previous/Next buttons:
       if (n == 0) {
@@ -243,10 +257,7 @@ endforeach;
         document.getElementById("prevBtn").style.display = "inline";
       }
       if (n == (x.length - 1)) {
-
-        // document.getElementById("nextBtn").innerHTML = "Submit";
-        document.getElementById("nextBtn").style.display = "none";
-        document.getElementById("prevBtn").style.display = "none";
+        document.getElementById("nextBtn").innerHTML = "Submit";
       } else {
         document.getElementById("nextBtn").innerHTML = "Next";
       }
@@ -279,15 +290,45 @@ endforeach;
       x = document.getElementsByClassName("tab");
       y = x[currentTab].getElementsByTagName("input");
       // A loop that checks every input field in the current tab:
+
+
+      var store = new Array();
       for (i = 0; i < y.length; i++) {
         // If a field is empty...
-        if (y[i].value == "") {
-          // add an "invalid" class to the field:
-          y[i].className += " invalid";
-          // and set the current valid status to false
-          valid = false;
-        }
+
+        store[i]=y[i].checked;
+        //  console.log(store);
+
       }
+        if(store.includes(true)){
+            console.log("selected");
+        document.getElementById("errorptag").style.display = "none";
+
+            valid = true;
+        }
+        else{
+        // sweetAlert("Error", "You have not selected any option", "error");
+        // sweetAlert('You have not selected any option');
+
+        var seterromsg = document.getElementById("errorptag");
+        document.getElementById("errorptag").style.display = "inline";
+        $("#errorptag").css("color", "red");
+
+        seterromsg.innerText= "You have not selected any option....!";
+
+
+
+        // swal({
+        //             title: "You have not selected any option ",
+        //             text: "Validation",
+        //             type: "error",
+        //              timer: 1000
+        //           });
+                  valid = false;
+            console.log("not selected");
+        }
+
+
       // If the valid status is true, mark the step as finished and valid:
       if (valid) {
         document.getElementsByClassName("step")[currentTab].className += " finish";
@@ -305,6 +346,9 @@ endforeach;
       x[n].className += " active";
     }
     </script>
+{{-- *******************************************IMP: multistep logic here **************************************************************--}}
+
+
     <script>
         $(document).ready(function(){
 
