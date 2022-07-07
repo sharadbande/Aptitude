@@ -14,12 +14,28 @@
 <body>
 
 <div class="container-fluid">
+
+
+
+{{-- *******************************************IMP : Prevent Question select and copy as well as prevent option click ********************** --}}
 <style>
     .form-check-label{
         pointer-events: none;
     }
+    body {
+            user-select: none; /* supported by Chrome and Opera */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+        }
 </style>
+{{-- *******************************************IMP : Prevent Question select and copy as well as prevent option click ********************** --}}
 
+
+
+
+{{-- *******************************************IMP : Next button and validation********************** --}}
 <style>
    /* Mark input boxes that gets an error on validation: */
 input.invalid {
@@ -70,6 +86,10 @@ button:hover {
   background-color: #04AA6D;
 }
 </style>
+{{-- *******************************************IMP : Next button and validation********************** --}}
+
+
+
     {{-- <div class="jumbotron">
       <h3>The big knowledge test!</h3>
       <p>How good is your general knowledge?</p>
@@ -237,6 +257,7 @@ endforeach;
 {{-- *******************************************IMP : after exam submited back not allowed**************************************************************--}}
 
 
+
 {{-- *******************************************IMP: multistep logic here **************************************************************--}}
 
  <script>
@@ -313,6 +334,7 @@ endforeach;
         var seterromsg = document.getElementById("errorptag");
         document.getElementById("errorptag").style.display = "inline";
         $("#errorptag").css("color", "red");
+        // $("#errorptag").fadeIn(6000);
 
         seterromsg.innerText= "You have not selected any option....!";
 
@@ -348,6 +370,8 @@ endforeach;
     </script>
 {{-- *******************************************IMP: multistep logic here **************************************************************--}}
 
+
+{{-- *******************************************IMP: Exam Submite **************************************************************--}}
 
     <script>
         $(document).ready(function(){
@@ -387,7 +411,12 @@ endforeach;
     });
 
     });
-      </script>
+</script>
+{{-- *******************************************IMP: Exam Submite **************************************************************--}}
+
+
+
+{{-- *******************************************IMP: Countdown counter logic and after time Expired exax will be auto submited***************--}}
 
       <script>
         // Set the date we're counting down to
@@ -447,7 +476,22 @@ endforeach;
           }
         }, 1000);
         </script>
+{{-- *******************************************IMP: Countdown counter logic and after time Expired exax will be auto submited***************--}}
 
+
+
+{{-- *******************************************IMP: F5 not allowed in page **************************************************************--}}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(window).keydown(function(event){
+      if(event.keyCode == 116) {
+        event.preventDefault();
+        return false;
+      }
+    });
+  });
+</script>
+{{-- *******************************************IMP: F5 not allowed in page **************************************************************--}}
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js"></script>
